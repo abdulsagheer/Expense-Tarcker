@@ -6,39 +6,39 @@ import AppBar from "./components/AppBar";
 import { setUser } from "./store/auth.js";
 
 function App() {
-  const token = Cookies.get("token");
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+	const token = Cookies.get("token");
+	const [isLoading, setIsLoading] = useState(true);
+	const dispatch = useDispatch();
 
-  async function fetchUser() {
-    setIsLoading(true);
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+	async function fetchUser() {
+		setIsLoading(true);
+		const res = await fetch(`${process.env.REACT_APP_API_URL}/user`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 
-    if (res.ok) {
-      const user = await res.json();
-      dispatch(setUser(user));
-    }
-    setIsLoading(false);
-  }
+		if (res.ok) {
+			const user = await res.json();
+			dispatch(setUser(user));
+		}
+		setIsLoading(false);
+	}
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+	useEffect(() => {
+		fetchUser();
+	}, []);
 
-  if (isLoading) {
-    return <p>Loading ...</p>;
-  }
+	if (isLoading) {
+		return <p>Loading ...</p>;
+	}
 
-  return (
-    <>
-      <AppBar />
-      <Outlet />
-    </>
-  );
+	return (
+		<>
+			<AppBar />
+			<Outlet />
+		</>
+	);
 }
 
 export default App;
